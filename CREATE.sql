@@ -2,7 +2,7 @@
 	Author: Marc-Andre Bossanyi
 	Email: ma.bossanyi@gmail.com
 	Creation Date: 2023/09/24
-	Last UpdatedL 2023/09/24
+	Last Updated: 2023/09/24
 */
 
 -- Script CREATE for the table "Type"
