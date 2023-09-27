@@ -2,13 +2,13 @@
 	Author: Marc-Andre Bossanyi
 	Email: ma.bossanyi@gmail.com
 	Creation Date: 2023/09/24
-	Last Updated: 2023/09/24
+	Last Updated: 2023/09/27
 */
 
 -- Script CREATE for the table "Type"
 CREATE TABLE Type(
 	idType SERIAL NOT NULL, 
-	name VARCHAR(20) NOT NULL,
+	name VARCHAR(15) NOT NULL,
 	isDeleted BOOL NOT NULL,
 	CONSTRAINT pk_idType PRIMARY KEY (idType)
 );
@@ -17,7 +17,7 @@ CREATE TABLE Type(
 -- Script CREATE for the table "Path"
 CREATE TABLE Path(
 	idPath SERIAL NOT NULL,
-	name VARCHAR(25) NOT NULL,
+	name VARCHAR(26) NOT NULL,
 	isDeleted BOOL NOT NULL, 
 	CONSTRAINT pk_idPath PRIMARY KEY (idPath)
 );
@@ -26,7 +26,7 @@ CREATE TABLE Path(
 -- Script CREATE for the table "Character"
 CREATE TABLE Character(
 	idCharacter SERIAL NOT NULL,
-	name VARCHAR(30) NOT NULL, 
+	name VARCHAR(35) NOT NULL, 
 	rarity INT NOT NULL,
 	idType INT NOT NULL,
 	idPath INT NOT NULL, 
@@ -41,8 +41,7 @@ CREATE TABLE Character(
 -- Script CREATE for the table "Stat"
 CREATE TABLE Stat(
 	idStat SERIAL NOT NULL, 
-	name VARCHAR(20) NOT NULL,
-	description VARCHAR(30) NOT NULL,
+	name VARCHAR(55) NOT NULL,
 	isDeleted BOOL NOT NULL,
 	CONSTRAINT pk_idStat PRIMARY KEY (idStat)
 );
@@ -50,7 +49,7 @@ CREATE TABLE Stat(
 -- Script CREATE for the table "Slot"
 CREATE TABLE Slot(
 	idSlot SERIAL NOT NULL, 
-	name VARCHAR(15) NOT NULL, 
+	name VARCHAR(21) NOT NULL, 
 	isDeleted BOOL NOT NULL, 
 	CONSTRAINT pk_idSlot PRIMARY KEY (idSlot)
 );
@@ -71,7 +70,7 @@ CREATE TABLE CharacterStat(
 -- Script CREATE for the table "Item"
 CREATE TABLE Item(
 	idItem SERIAL NOT NULL,
-	name VARCHAR(40) NOT NULL,
+	name VARCHAR(50) NOT NULL,
 	isDeleted BOOL NOT NULL,
 	CONSTRAINT pk_idItem PRIMARY KEY (idItem)
 );
@@ -85,5 +84,14 @@ CREATE TABLE CharacterItem(
 	CONSTRAINT pk_CharacterItem PRIMARY KEY (idCharacter, idSlot, idItem),
 	CONSTRAINT fk_idCharacter FOREIGN KEY (idCharacter) REFERENCES Character(idCharacter),
 	CONSTRAINT fk_idSlot FOREIGN KEY (idSlot) REFERENCES Slot(idSlot),
+	CONSTRAINT fk_idItem FOREIGN KEY (idItem) REFERENCES Item(idItem)
+);
+
+-- Script CREATE for the table "ItemsSet"
+CREATE TABLE ItemsSet(
+	idItem INT NOT NULL, 
+	quantity INT NOT NULL,
+	description VARCHAR(300) NOT NULL, 
+	CONSTRAINT pk_ItemsSet PRIMARY KEY (idItem, quantity), 
 	CONSTRAINT fk_idItem FOREIGN KEY (idItem) REFERENCES Item(idItem)
 );
