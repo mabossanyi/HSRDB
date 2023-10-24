@@ -27,6 +27,16 @@ if __name__ == '__main__':
     # Write the "INSERT_TYPE.sql" file
     writer.write_insert_type_sql_file("INSERT_TYPE.sql", storage)
 
+    # Extract the path
+    paths = extractor.extract_paths()
+
+    # Store the paths
+    storage.store_paths(paths)
+
+    # Write the "INSERT_PATH.sql" file
+    writer.write_insert_path_sql_file("INSERT_PATH.sql", storage)
+
+
 
 
 
