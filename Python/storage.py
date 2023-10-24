@@ -3,6 +3,8 @@ class Storage:
     _types = list()
     _paths = list()
     _items = list()
+    _items_sets = list()
+
 
     # Constructors
     def __init__(self):
@@ -17,6 +19,9 @@ class Storage:
 
     def get_stored_items(self):
         return self._items
+
+    def get_stored_items_set(self):
+        return self._items_sets
 
     # Methods
     def store_types(self, types):
@@ -40,3 +45,9 @@ class Storage:
             self._items.append((id_item, item))
             id_item += 1
 
+    def store_items_sets(self, items_details):
+        for item in items_details:
+            (name, quantity, description) = item
+            id_item = str([i[0] for i in self.get_stored_items() if name == i[1]][0])
+            description = description.replace("'", "''")
+            self._items_sets.append((id_item, quantity, description))

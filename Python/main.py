@@ -49,8 +49,8 @@ if __name__ == '__main__':
     ornaments_page_extractor = extractor.Extractor(raw_html_ornaments)
 
     # Extract the relic names and ornament names
-    relic_names = relics_page_extractor.extract_relics_or_ornaments()
-    ornament_names = ornaments_page_extractor.extract_relics_or_ornaments()
+    relic_names = relics_page_extractor.extract_relics_or_ornaments_name()
+    ornament_names = ornaments_page_extractor.extract_relics_or_ornaments_name()
     relic_ornament_names = relic_names + ornament_names
 
     # Store the items
@@ -59,4 +59,13 @@ if __name__ == '__main__':
     # Write the "INSERT_ITEM.sql" file
     writer.write_insert_item_sql_file("INSERT_ITEM.sql", storage)
 
-    
+    # Extract the relic set description and ornament set description
+    relic_details = relics_page_extractor.extract_relics_or_ornaments_description()
+    ornament_details = ornaments_page_extractor.extract_relics_or_ornaments_description()
+    relic_ornament_details = relic_details + ornament_details
+
+    # Store the items sets
+    storage.store_items_sets(relic_ornament_details)
+
+    # Write the "INSERT_ITEMS_SET.sql" file
+    writer.write_insert_items_set_sql_file("INSERT_ITEMS_SET.sql", storage)
