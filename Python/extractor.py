@@ -24,13 +24,22 @@ class Extractor:
     def _extract_html_from_filters(self, string_to_find):
         pattern = '<div class="filters-divider"></div>.*?</div></div>'
         match_results = re.search(pattern, self._raw_html, re.IGNORECASE)
-        raw_paths_html = match_results.group()
+        match_results_grouped = match_results.group()
 
         pattern = '<img alt=".*?" .*?>'
-        match_results_list = re.findall(pattern, raw_paths_html, re.IGNORECASE)
-        list_paths = [line for line in match_results_list if line.find(string_to_find) != -1]
-        list_paths = [re.sub('<.*?"', '', s) for s in list_paths]
-        list_paths = [re.sub('".*?>', '', s) for s in list_paths]
+        match_results_list = re.findall(pattern, match_results_grouped, re.IGNORECASE)
+        list_html = [line for line in match_results_list if line.find(string_to_find) != -1]
+        list_html = [re.sub('<.*?"', '', s) for s in list_html]
+        list_html = [re.sub('".*?>', '', s) for s in list_html]
 
-        return list_paths
+        return list_html
+
+    def extract_relics_or_ornaments(self):
+        pattern = '<div class="light-cones-item">.*?</div>'
+        match_results_list = re.findall(pattern, self._raw_html, re.IGNORECASE)
+        list_html = [re.sub('<.*?><img alt="', '', s) for s in match_results_list]
+        list_html = [re.sub('".*?</div>', '', s) for s in list_html]
+
+        return list_html
+
 
