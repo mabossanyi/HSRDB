@@ -4,7 +4,7 @@ class Storage:
     _paths = list()
     _items = list()
     _items_sets = list()
-
+    _characters_data = list()
 
     # Constructors
     def __init__(self):
@@ -49,5 +49,7 @@ class Storage:
         for item in items_details:
             (name, quantity, description) = item
             id_item = str([i[0] for i in self.get_stored_items() if name == i[1]][0])
-            description = description.replace("'", "''")
             self._items_sets.append((id_item, quantity, description))
+
+    def store_characters_raw_data(self, characters_data):
+        self._characters_data = characters_data
