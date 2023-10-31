@@ -7,6 +7,7 @@ class Storage:
     _characters_data = list()
     _stats = list()
     _slots = list()
+    _characters = list()
 
     # Constructors
     def __init__(self):
@@ -33,6 +34,9 @@ class Storage:
 
     def get_stored_slots(self):
         return self._slots
+
+    def get_stored_characters(self):
+        return self._characters
 
     # Methods
     def store_types(self, types):
@@ -78,3 +82,13 @@ class Storage:
         for slot in slots:
             self._slots.append((id_slot, slot))
             id_slot += 1
+
+    def store_characters(self, characters):
+        id_character = 1
+
+        for character in characters:
+            (name, rarity, type, path) = character
+            id_type = str([t[0] for t in self.get_stored_types() if type == t[1]][0])
+            id_path = str([p[0] for p in self.get_stored_paths() if path == p[1]][0])
+            self._characters.append((id_character, name, rarity, id_type, id_path))
+            id_character += 1

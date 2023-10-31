@@ -94,3 +94,12 @@ if __name__ == '__main__':
 
     # Write the "INSERT_SLOT.sql" file
     writer.write_insert_slot_sql_file("INSERT_SLOT.sql", storage)
+
+    # Pre-process the characters data for the table "Character"
+    characters = data_processor.pre_process_characters_data_for_character()
+
+    # Store the characters
+    storage.store_characters(characters)
+
+    # Write the "INSERT_CHARACTER.sql" file
+    writer.write_insert_character_sql_file("INSERT_CHARACTER.sql", storage)
