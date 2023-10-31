@@ -4,6 +4,7 @@ class Writer:
     _is_insert_path_written = False
     _is_insert_item_written = False
     _is_insert_items_set_written = False
+    _is_insert_stat_written = False
 
     # Constructors
     def __init__(self):
@@ -11,6 +12,7 @@ class Writer:
         self._is_insert_path_written = False
         self._is_insert_item_written = False
         self._is_insert_items_set_written = False
+        self._is_insert_stat_written = False
 
     # Getters
     def get_is_insert_type_written(self):
@@ -59,4 +61,15 @@ class Writer:
                        .format(id_item, quantity, description))
 
         self._is_insert_items_set_written = True
+        file.close()
+
+    def write_insert_stat_sql_file(self, file_name, storage):
+        file = open(file_name, "w")
+        stored_stats = storage.get_stored_stats()
+
+        for (id_stat, stat) in stored_stats:
+            file.write("INSERT INTO Stat (idStat, name, isDeleted) VALUES ({0}, '{1}', false);\n"
+                       .format(id_stat, stat))
+
+        self._is_insert_stat_written = True
         file.close()

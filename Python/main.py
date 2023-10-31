@@ -1,6 +1,7 @@
 # Libraries
 import browser
 import extractor
+import processor
 import storage
 import writer
 
@@ -74,3 +75,15 @@ if __name__ == '__main__':
 
     # Store the characters data
     storage.store_characters_raw_data(characters_data)
+
+    # Pre-process the characters data for the table "Stat"
+    data_processor = processor.Processor(storage.get_characters_data())
+    stats = data_processor.pre_process_characters_data_for_stat()
+
+    # Store the stats
+    storage.store_stats(stats)
+
+    # Write the "INSERT_STAT.sql" file
+    writer.write_insert_stat_sql_file("INSERT_STAT.sql", storage)
+
+

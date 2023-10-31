@@ -143,7 +143,7 @@ class Extractor:
             match_results_grouped = match_results.group()
             relics_and_ornaments = re.sub('<h2 .*?>', '', match_results_grouped)
             relics_and_ornaments = re.sub('</h2>', '', relics_and_ornaments)
-            relics_and_ornaments = relics_and_ornaments.split(" ")[-1]
+            relics_and_ornaments = relics_and_ornaments.split(" ")[-1].lower()
             relics_and_ornaments_list = list()
 
             pattern = '<div class="character-info-weapon-rank">.*?</div></div></div>'
@@ -172,7 +172,7 @@ class Extractor:
             match_results_grouped = match_results.group()
             ss = re.sub('<h2 .*?>', '', match_results_grouped)
             ss = re.sub('</h2>', '', ss)
-            ss = ss.split(" ")[-1]
+            ss = ss.split(" ")[-1].lower()
             ss_list = list()
 
             pattern = '<div class="character-info-stats-item">.*?</div>'
@@ -194,8 +194,8 @@ class Extractor:
 
         ro_dict_keys = [key for key in relics_and_ornaments_dict.keys()]
         ss_dict_keys = [key for key in ss_dict.keys()]
-        character_data = {name: {"rarity": rarity, "type": type, "path": path, ro_dict_keys[0]: relics_and_ornaments_dict[ro_dict_keys[0]],
-                                 ro_dict_keys[1]: relics_and_ornaments_dict[ro_dict_keys[1]], ss_dict_keys[0]: ss_dict[ss_dict_keys[0]],
-                                 ss_dict_keys[1]: ss_dict[ss_dict_keys[1]]}}
+        character_data = {"name": name, "rarity": rarity, "type": type, "path": path, ro_dict_keys[0]: relics_and_ornaments_dict[ro_dict_keys[0]],
+                          ro_dict_keys[1]: relics_and_ornaments_dict[ro_dict_keys[1]], ss_dict_keys[0]: ss_dict[ss_dict_keys[0]],
+                          ss_dict_keys[1]: ss_dict[ss_dict_keys[1]]}
 
         return character_data
