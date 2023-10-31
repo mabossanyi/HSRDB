@@ -6,6 +6,7 @@ class Storage:
     _items_sets = list()
     _characters_data = list()
     _stats = list()
+    _slots = list()
 
     # Constructors
     def __init__(self):
@@ -29,6 +30,9 @@ class Storage:
 
     def get_stored_stats(self):
         return self._stats
+
+    def get_stored_slots(self):
+        return self._slots
 
     # Methods
     def store_types(self, types):
@@ -67,3 +71,10 @@ class Storage:
         for stat in stats:
             self._stats.append((id_stat, stat))
             id_stat += 1
+
+    def store_slots(self, slots):
+        id_slot = 1
+
+        for slot in slots:
+            self._slots.append((id_slot, slot))
+            id_slot += 1
