@@ -103,3 +103,12 @@ if __name__ == '__main__':
 
     # Write the "INSERT_CHARACTER.sql" file
     writer.write_insert_character_sql_file("INSERT_CHARACTER.sql", storage)
+
+    # Pre-process the characters data for the table "CharacterStat"
+    characters_stats = data_processor.pre_process_characters_data_for_character_stat(storage)
+
+    # Store the characters stats
+    storage.store_characters_stats(characters_stats)
+
+    # Write the "INSERT_CHARACTER_STAT.sql" file
+    writer.write_insert_character_stat_sql_file("INSERT_CHARACTER_STAT.sql", storage)
