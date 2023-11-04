@@ -17,11 +17,7 @@ class Processor:
             stats_set = set(stats_list)
 
             for stat in stats_set:
-                if stat.find("/") != -1:
-                    sorted_stat_list = sorted(stat.split(" / "))
-                    all_stats_set.add(" / ".join(sorted_stat_list))
-                else:
-                    all_stats_set.add(stat)
+                all_stats_set.add(self._sort_stat_alphabetical_order(stat))
 
         all_stats_set = sorted(all_stats_set)
 
@@ -61,3 +57,30 @@ class Processor:
             characters_list.append((name, rarity, type, path))
 
         return characters_list
+
+    def pre_process_characters_data_for_character_stat(self, storage):
+        characters_stats_list = list()
+
+        for character_data in self._data:
+            name = character_data["name"]
+            stats = character_data["stats"]
+            substats = character_data["substats"]
+
+            new_stats = ["{};{}".format(s.split(";")[0], self._sort_stat_alphabetical_order(s.split(";")[1])) for s in stats]
+            new_substats = [self._sort_stat_alphabetical_order(s) for s in substats]
+            new_substats = ["Substat {};{}".format(i + 1, new_substats[i]) for i in range(len(new_substats))]
+
+            new_stats_and_substats = new_stats + new_substats
+
+            for stat_or_substat in new_stats_and_substats:
+                slot_name, stat = stat_or_substat.split(";")
+                characters_stats_list.append((name, slot_name, stat))
+
+        return characters_stats_list
+
+    def _sort_stat_alphabetical_order(self, stat):
+        if stat.find("/") != -1:
+            sorted_stat_list = sorted(stat.split(" / "))
+            return " / ".join(sorted_stat_list)
+        else:
+            return stat
