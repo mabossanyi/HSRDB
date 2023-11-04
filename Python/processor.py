@@ -58,7 +58,7 @@ class Processor:
 
         return characters_list
 
-    def pre_process_characters_data_for_character_stat(self, storage):
+    def pre_process_characters_data_for_character_stat(self):
         characters_stats_list = list()
 
         for character_data in self._data:
@@ -84,3 +84,28 @@ class Processor:
             return " / ".join(sorted_stat_list)
         else:
             return stat
+
+    def pre_process_characters_data_for_character_item(self):
+        characters_items_list = list()
+
+        for character_data in self._data:
+            name = character_data["name"]
+            relics = character_data["relics"]
+            ornaments = character_data["ornaments"]
+
+            new_relics = [self._extract_item_to_slot("Relic", i + 1, relics[i]) for i in range(len(relics))]
+            new_ornaments = [self._extract_item_to_slot("Ornament", i + 1, ornaments[i]) for i in range(len(ornaments))]
+            new_relics_and_ornaments = new_relics + new_ornaments
+            new_relics_and_ornaments = [ro for ro_lst in new_relics_and_ornaments for ro in ro_lst]
+
+            for relic_or_ornament in new_relics_and_ornaments:
+                slot_name_with_id, item, quantity = relic_or_ornament.split(";")
+                characters_items_list.append((name, slot_name_with_id, item, quantity))
+
+        return characters_items_list
+
+    def _extract_item_to_slot(self, slot_name, slot_id, items):
+        slot_name_with_id = "{} {}".format(slot_name, slot_id)
+        new_items = ["{};{};{}".format(slot_name_with_id, item.split(";")[0], item.split(";")[1]) for item in items]
+
+        return new_items
