@@ -1,21 +1,16 @@
 # Libraries
-from urllib.request import urlopen
-
+import browser
 import extractor
+import processor
 import storage
 import writer
 
 
-def get_html_from_url(url):
-    page = urlopen(url)
-    html = page.read().decode("utf-8")
-
-    return html
-
-
 if __name__ == '__main__':
     # Extract the HTML from the webpage for the types and the paths
-    raw_html = get_html_from_url("https://genshin.gg/star-rail/")
+    main_page_url = "https://genshin.gg/star-rail/"
+    main_page_browser = browser.Browser(main_page_url)
+    raw_html = main_page_browser.get_html_from_url()
 
     # Get the classes "Extractor", "Storage" and "Writer"
     main_page_extractor = extractor.Extractor(raw_html)
@@ -41,8 +36,13 @@ if __name__ == '__main__':
     writer.write_insert_path_sql_file("INSERT_PATH.sql", storage)
 
     # Extract the HTML from the webpage for the relics and the ornaments
-    raw_html_relics = get_html_from_url("https://genshin.gg/star-rail/relics/")
-    raw_html_ornaments = get_html_from_url("https://genshin.gg/star-rail/planar-ornaments/")
+    relics_page_url = "https://genshin.gg/star-rail/relics/"
+    relics_page_browser = browser.Browser(relics_page_url)
+    raw_html_relics = relics_page_browser.get_html_from_url()
+
+    ornaments_page_url = "https://genshin.gg/star-rail/planar-ornaments/"
+    ornaments_page_browser = browser.Browser(ornaments_page_url)
+    raw_html_ornaments = ornaments_page_browser.get_html_from_url()
 
     # Get the class "Extractor"
     relics_page_extractor = extractor.Extractor(raw_html_relics)
@@ -69,3 +69,56 @@ if __name__ == '__main__':
 
     # Write the "INSERT_ITEMS_SET.sql" file
     writer.write_insert_items_set_sql_file("INSERT_ITEMS_SET.sql", storage)
+
+    # Extract the characters data for each character on the main page
+    characters_data = main_page_extractor.extract_characters_data(main_page_url)
+
+    # Store the characters data
+    storage.store_characters_raw_data(characters_data)
+
+    # Pre-process the characters data for the table "Stat"
+    data_processor = processor.Processor(storage.get_characters_data())
+    stats = data_processor.pre_process_characters_data_for_stat()
+
+    # Store the stats
+    storage.store_stats(stats)
+
+    # Write the "INSERT_STAT.sql" file
+    writer.write_insert_stat_sql_file("INSERT_STAT.sql", storage)
+
+    # Pre-process the characters data for the table "Slot"
+    slots = data_processor.pre_process_characters_data_for_slot()
+
+    # Store the slots
+    storage.store_slots(slots)
+
+    # Write the "INSERT_SLOT.sql" file
+    writer.write_insert_slot_sql_file("INSERT_SLOT.sql", storage)
+
+    # Pre-process the characters data for the table "Character"
+    characters = data_processor.pre_process_characters_data_for_character()
+
+    # Store the characters
+    storage.store_characters(characters)
+
+    # Write the "INSERT_CHARACTER.sql" file
+    writer.write_insert_character_sql_file("INSERT_CHARACTER.sql", storage)
+
+    # Pre-process the characters data for the table "CharacterStat"
+    characters_stats = data_processor.pre_process_characters_data_for_character_stat()
+
+    # Store the characters stats
+    storage.store_characters_stats(characters_stats)
+
+    # Write the "INSERT_CHARACTER_STAT.sql" file
+    writer.write_insert_character_stat_sql_file("INSERT_CHARACTER_STAT.sql", storage)
+
+    # Pre-process the characters data for the table "CharacterItem"
+    characters_items = data_processor.pre_process_characters_data_for_character_item()
+
+    # Store the characters items
+    storage.store_characters_items(characters_items)
+
+    # Write the "INSERT_CHARACTER_ITEM.sql" file
+    writer.write_insert_character_item_sql_file("INSERT_CHARACTER_ITEM.sql", storage)
+

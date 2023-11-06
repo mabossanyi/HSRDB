@@ -4,6 +4,11 @@ class Writer:
     _is_insert_path_written = False
     _is_insert_item_written = False
     _is_insert_items_set_written = False
+    _is_insert_stat_written = False
+    _is_insert_slot_written = False
+    _is_insert_character_written = False
+    _is_insert_character_stat_written = False
+    _is_insert_character_item_written = False
 
     # Constructors
     def __init__(self):
@@ -11,6 +16,11 @@ class Writer:
         self._is_insert_path_written = False
         self._is_insert_item_written = False
         self._is_insert_items_set_written = False
+        self._is_insert_stat_written = False
+        self._is_insert_slot_written = False
+        self._is_insert_character_written = False
+        self._is_insert_character_stat_written = False
+        self._is_insert_character_item_written = False
 
     # Getters
     def get_is_insert_type_written(self):
@@ -59,4 +69,59 @@ class Writer:
                        .format(id_item, quantity, description))
 
         self._is_insert_items_set_written = True
+        file.close()
+
+    def write_insert_stat_sql_file(self, file_name, storage):
+        file = open(file_name, "w")
+        stored_stats = storage.get_stored_stats()
+
+        for (id_stat, stat) in stored_stats:
+            file.write("INSERT INTO Stat (idStat, name, isDeleted) VALUES ({0}, '{1}', false);\n"
+                       .format(id_stat, stat))
+
+        self._is_insert_stat_written = True
+        file.close()
+
+    def write_insert_slot_sql_file(self, file_name, storage):
+        file = open(file_name, "w")
+        stored_slots = storage.get_stored_slots()
+
+        for (id_slot, slot) in stored_slots:
+            file.write("INSERT INTO Slot (idSlot, name, isDeleted) VALUES ({0}, '{1}', false);\n"
+                       .format(id_slot, slot))
+
+        self._is_insert_slot_written = True
+        file.close()
+
+    def write_insert_character_sql_file(self, file_name, storage):
+        file = open(file_name, "w")
+        stored_characters = storage.get_stored_characters()
+
+        for (id_character, name, rarity, id_type, id_path) in stored_characters:
+            file.write("INSERT INTO Character (idCharacter, name, rarity, idType, idPath, isOwned, isDeleted) VALUES ({0}, '{1}', {2}, {3}, {4}, false, false);\n"
+                       .format(id_character, name, rarity, id_type, id_path))
+
+        self._is_insert_character_written = True
+        file.close()
+
+    def write_insert_character_stat_sql_file(self, file_name, storage):
+        file = open(file_name, "w")
+        stored_characters_stats = storage.get_stored_characters_stats()
+
+        for (id_character, id_slot, id_stat) in stored_characters_stats:
+            file.write("INSERT INTO CharacterStat (idCharacter, idSlot, idStat) VALUES ({0}, {1}, {2});\n"
+                       .format(id_character, id_slot, id_stat))
+
+        self._is_insert_character_stat_written = True
+        file.close()
+
+    def write_insert_character_item_sql_file(self, file_name, storage):
+        file = open(file_name, "w")
+        stored_characters_items = storage.get_stored_characters_items()
+
+        for (id_character, id_slot, id_stat, quantity) in stored_characters_items:
+            file.write("INSERT INTO CharacterItem (idCharacter, idSlot, idItem) VALUES ({0}, {1}, {2});\n"
+                       .format(id_character, id_slot, id_stat))
+
+        self._is_insert_character_item_written = True
         file.close()
