@@ -133,13 +133,13 @@ class Extractor:
         name = re.sub('">', '', name)
         name = name.replace("'", "''")
 
-        # Element (i.e. type)
+        # Type
         pattern = '<img class="character-info-element" .*?</div>'
         match_results = re.search(pattern, character_raw_html, re.IGNORECASE)
         match_results_grouped = match_results.group()
-        element = re.sub('<.*? alt="', '', match_results_grouped)
-        element = re.sub('"></div>', '', element)
-        element = element.replace("'", "''")
+        type = re.sub('<.*? alt="', '', match_results_grouped)
+        type = re.sub('"></div>', '', type)
+        type = type.replace("'", "''")
 
         # Path
         pattern = '<img class="character-info-path-icon" .*?>.*?</div>'
@@ -252,7 +252,7 @@ class Extractor:
         character_data = {
             "name": name,
             "rarity": rarity,
-            "type": element,
+            "type": type,
             "path": path,
             relics_and_ornaments_dict_keys[0]: relics_and_ornaments_dict[
                 relics_and_ornaments_dict_keys[0]],
