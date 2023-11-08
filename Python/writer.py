@@ -1,5 +1,6 @@
 # Libraries
 from datetime import datetime
+import os.path
 
 
 class Writer:
@@ -16,7 +17,9 @@ class Writer:
 
     # Methods
     def write_insert_sql_file(self, file_name, storage):
-        file = open(file_name, "w")
+        sql_folder_path = "../SQL/"
+        file_path = os.path.join(sql_folder_path, file_name)
+        file = open(file_path, "w")
 
         self._write_file_header(file)
         self._write_insert_type_sql_file(file, storage)

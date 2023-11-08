@@ -106,10 +106,10 @@ class Storage:
 
         for character in characters:
             (name, rarity, type, path) = character
-            id_type = str([type[0] for type in self.get_stored_types()
-                           if type == type[1]][0])
-            id_path = str([path[0] for path in self.get_stored_paths()
-                           if path == path[1]][0])
+            id_type = str([type_t[0] for type_t in self.get_stored_types()
+                           if type == type_t[1]][0])
+            id_path = str([path_p[0] for path_p in self.get_stored_paths()
+                           if path == path_p[1]][0])
             self._characters.append((id_character, name, rarity,
                                      id_type, id_path))
             id_character += 1
@@ -122,8 +122,8 @@ class Storage:
                  if name == character[1]][0])
             id_slot = str([slot[0] for slot in self.get_stored_slots()
                            if slot_name == slot[1]][0])
-            id_stat = str([stat[0] for stat in self.get_stored_stats()
-                           if stat == stat[1]][0])
+            id_stat = str([stat_st[0] for stat_st in self.get_stored_stats()
+                           if stat == stat_st[1]][0])
             self._characters_stats.append((id_character, id_slot, id_stat))
 
     def store_characters_items(self, characters_items):
