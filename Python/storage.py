@@ -1,19 +1,28 @@
 class Storage:
     # Attributes
-    _types = list()
-    _paths = list()
-    _items = list()
-    _items_sets = list()
-    _characters_data = list()
-    _stats = list()
-    _slots = list()
-    _characters = list()
-    _characters_stats = list()
-    _characters_items = list()
+    _types = None
+    _paths = None
+    _items = None
+    _items_sets = None
+    _characters_data = None
+    _stats = None
+    _slots = None
+    _characters = None
+    _characters_stats = None
+    _characters_items = None
 
     # Constructors
     def __init__(self):
-        pass
+        self._types = list()
+        self._paths = list()
+        self._items = list()
+        self._items_sets = list()
+        self._characters_data = list()
+        self._stats = list()
+        self._slots = list()
+        self._characters = list()
+        self._characters_stats = list()
+        self._characters_items = list()
 
     # Getters
     def get_stored_types(self):
@@ -71,7 +80,8 @@ class Storage:
     def store_items_sets(self, items_details):
         for item in items_details:
             (name, quantity, description) = item
-            id_item = str([i[0] for i in self.get_stored_items() if name == i[1]][0])
+            id_item = str([item[0] for item in self.get_stored_items()
+                           if name == item[1]][0])
             self._items_sets.append((id_item, quantity, description))
 
     def store_characters_raw_data(self, characters_data):
@@ -96,23 +106,35 @@ class Storage:
 
         for character in characters:
             (name, rarity, type, path) = character
-            id_type = str([t[0] for t in self.get_stored_types() if type == t[1]][0])
-            id_path = str([p[0] for p in self.get_stored_paths() if path == p[1]][0])
-            self._characters.append((id_character, name, rarity, id_type, id_path))
+            id_type = str([type[0] for type in self.get_stored_types()
+                           if type == type[1]][0])
+            id_path = str([path[0] for path in self.get_stored_paths()
+                           if path == path[1]][0])
+            self._characters.append((id_character, name, rarity,
+                                     id_type, id_path))
             id_character += 1
 
     def store_characters_stats(self, characters_stats):
         for character_stat in characters_stats:
             (name, slot_name, stat) = character_stat
-            id_character = str([c[0] for c in self.get_stored_characters() if name == c[1]][0])
-            id_slot = str([sl[0] for sl in self.get_stored_slots() if slot_name == sl[1]][0])
-            id_stat = str([st[0] for st in self.get_stored_stats() if stat == st[1]][0])
+            id_character = str(
+                [character[0] for character in self.get_stored_characters()
+                 if name == character[1]][0])
+            id_slot = str([slot[0] for slot in self.get_stored_slots()
+                           if slot_name == slot[1]][0])
+            id_stat = str([stat[0] for stat in self.get_stored_stats()
+                           if stat == stat[1]][0])
             self._characters_stats.append((id_character, id_slot, id_stat))
 
     def store_characters_items(self, characters_items):
         for character_item in characters_items:
             (name, slot_name, item_name, quantity) = character_item
-            id_character = str([c[0] for c in self.get_stored_characters() if name == c[1]][0])
-            id_slot = str([sl[0] for sl in self.get_stored_slots() if slot_name == sl[1]][0])
-            id_item = str([it[0] for it in self.get_stored_items() if item_name == it[1]][0])
-            self._characters_items.append((id_character, id_slot, id_item, quantity))
+            id_character = str(
+                [character[0] for character in self.get_stored_characters()
+                 if name == character[1]][0])
+            id_slot = str([slot[0] for slot in self.get_stored_slots()
+                           if slot_name == slot[1]][0])
+            id_item = str([item[0] for item in self.get_stored_items()
+                           if item_name == item[1]][0])
+            self._characters_items.append((id_character, id_slot,
+                                           id_item, quantity))
