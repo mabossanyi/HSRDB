@@ -23,17 +23,11 @@ if __name__ == '__main__':
     # Store the types
     storage.store_types(types)
 
-    # Write the "INSERT_TYPE.sql" file
-    writer.write_insert_type_sql_file("INSERT_TYPE.sql", storage)
-
     # Extract the path
     paths = main_page_extractor.extract_paths()
 
     # Store the paths
     storage.store_paths(paths)
-
-    # Write the "INSERT_PATH.sql" file
-    writer.write_insert_path_sql_file("INSERT_PATH.sql", storage)
 
     # Extract the HTML from the webpage for the relics and the ornaments
     relics_page_url = "https://genshin.gg/star-rail/relics/"
@@ -56,9 +50,6 @@ if __name__ == '__main__':
     # Store the items
     storage.store_items(relic_ornament_names)
 
-    # Write the "INSERT_ITEM.sql" file
-    writer.write_insert_item_sql_file("INSERT_ITEM.sql", storage)
-
     # Extract the relic set description and ornament set description
     relic_details = relics_page_extractor.extract_relics_or_ornaments_description()
     ornament_details = ornaments_page_extractor.extract_relics_or_ornaments_description()
@@ -66,9 +57,6 @@ if __name__ == '__main__':
 
     # Store the items sets
     storage.store_items_sets(relic_ornament_details)
-
-    # Write the "INSERT_ITEMS_SET.sql" file
-    writer.write_insert_items_set_sql_file("INSERT_ITEMS_SET.sql", storage)
 
     # Extract the characters data for each character on the main page
     characters_data = main_page_extractor.extract_characters_data(main_page_url)
@@ -83,17 +71,11 @@ if __name__ == '__main__':
     # Store the stats
     storage.store_stats(stats)
 
-    # Write the "INSERT_STAT.sql" file
-    writer.write_insert_stat_sql_file("INSERT_STAT.sql", storage)
-
     # Pre-process the characters data for the table "Slot"
     slots = data_processor.pre_process_characters_data_for_slot()
 
     # Store the slots
     storage.store_slots(slots)
-
-    # Write the "INSERT_SLOT.sql" file
-    writer.write_insert_slot_sql_file("INSERT_SLOT.sql", storage)
 
     # Pre-process the characters data for the table "Character"
     characters = data_processor.pre_process_characters_data_for_character()
@@ -101,17 +83,11 @@ if __name__ == '__main__':
     # Store the characters
     storage.store_characters(characters)
 
-    # Write the "INSERT_CHARACTER.sql" file
-    writer.write_insert_character_sql_file("INSERT_CHARACTER.sql", storage)
-
     # Pre-process the characters data for the table "CharacterStat"
     characters_stats = data_processor.pre_process_characters_data_for_character_stat()
 
     # Store the characters stats
     storage.store_characters_stats(characters_stats)
-
-    # Write the "INSERT_CHARACTER_STAT.sql" file
-    writer.write_insert_character_stat_sql_file("INSERT_CHARACTER_STAT.sql", storage)
 
     # Pre-process the characters data for the table "CharacterItem"
     characters_items = data_processor.pre_process_characters_data_for_character_item()
@@ -120,5 +96,4 @@ if __name__ == '__main__':
     storage.store_characters_items(characters_items)
 
     # Write the "INSERT_CHARACTER_ITEM.sql" file
-    writer.write_insert_character_item_sql_file("INSERT_CHARACTER_ITEM.sql", storage)
-
+    writer.write_insert_sql_file("INSERT.sql", storage)
