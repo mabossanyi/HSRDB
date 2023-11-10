@@ -64,8 +64,9 @@ def main():
     preprocess_and_store_characters_items(data_processor, storage)
 
     # Write the "INSERT.sql" file
+    version = "1.4"
     file_name = "INSERT.sql"
-    write_insert_sql_file(file_name, storage)
+    write_insert_sql_file(file_name, version, storage)
 
 
 def get_page_extractor_from_url(url):
@@ -134,9 +135,9 @@ def preprocess_and_store_characters_items(data_processor, storage):
     storage.store_characters_items(characters_items)
 
 
-def write_insert_sql_file(file_name, storage):
+def write_insert_sql_file(file_name, version, storage):
     file_writer = Writer()
-    file_writer.write_insert_sql_file(file_name, storage)
+    file_writer.write_insert_sql_file(file_name, version, storage)
 
 
 if __name__ == '__main__':

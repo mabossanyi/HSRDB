@@ -16,12 +16,12 @@ class Writer:
         return self._is_insert_file_written
 
     # Methods
-    def write_insert_sql_file(self, file_name, storage):
+    def write_insert_sql_file(self, file_name, version, storage):
         sql_folder_path = "../SQL/"
         file_path = os.path.join(sql_folder_path, file_name)
         file = open(file_path, "w")
 
-        self._write_file_header(file)
+        self._write_file_header(file, version)
         self._write_insert_type_sql_file(file, storage)
         self._write_insert_path_sql_file(file, storage)
         self._write_insert_item_sql_file(file, storage)
@@ -35,13 +35,14 @@ class Writer:
 
         file.close()
 
-    def _write_file_header(self, file):
+    def _write_file_header(self, file, version):
         file.write("/*\n")
         file.write("\tAuthor: Marc-Andre Bossanyi\n")
         file.write("\tEmail: ma.bossanyi@gmail.com\n")
         file.write("\tCreation Date: 2023/11/06\n")
         file.write("\tLast Updated: {}\n".
                    format(datetime.today().strftime('%Y/%m/%d')))
+        file.write("\tHonkai: Star Rail - {}\n".format(version))
         file.write("*/\n\n")
 
     def _write_insert_type_sql_file(self, file, storage):
