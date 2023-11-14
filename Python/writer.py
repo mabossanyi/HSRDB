@@ -31,7 +31,7 @@ class Writer:
         self._write_insert_character_sql_file(file, storage)
         self._write_insert_character_stat_sql_file(file, storage)
         self._write_insert_character_item_sql_file(file, storage)
-        self._is_insert_file_written = True
+        self._locate_insert_file(file_path)
 
         file.close()
 
@@ -149,3 +149,20 @@ class Writer:
                        .format(id_character, id_slot, id_stat))
 
         file.write("\n")
+
+    def _locate_insert_file(self, file_path):
+        if os.path.isfile(file_path):
+            file = open(file_path, "r")
+            file_lines = file.readlines()
+            file.close()
+
+            if file_lines == 0:
+                self._is_insert_file_written = True
+                print("\t --> Error: The 'INSERT.sql' file is empty")
+            else:
+                self._is_insert_file_written = True
+                print("\t --> Success: The 'INSERT.sql' file has been written "
+                      "in the following path: {}".format(file_path))
+        else:
+            self._is_insert_file_written = False
+            print("\t --> Error: The 'INSERT.sql' doesn't exist")

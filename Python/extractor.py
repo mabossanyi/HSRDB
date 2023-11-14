@@ -262,5 +262,6 @@ class Extractor:
                 stats_and_substats_dict_keys[0]],
             stats_and_substats_dict_keys[1]: stats_and_substats_dict[
                 stats_and_substats_dict_keys[1]]}
+        print("\t> {}".format(name))
 
         return character_data
