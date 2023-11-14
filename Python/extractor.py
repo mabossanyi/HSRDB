@@ -236,10 +236,12 @@ class Extractor:
                     slot_and_stat = re.sub(
                         '</div>', '', slot_and_stat)
                     slot_and_stat = slot_and_stat.replace(": ", ";")
+                    slot_and_stat = slot_and_stat.replace("Res", "RES")
                     stats_and_substats_list.append(slot_and_stat)
                 else:
                     substat = re.sub('<div .*?>', '', single_stat_or_substat)
                     substat = re.sub('</div>', '', substat)
+                    substat = re.sub('Res', 'RES', substat)
                     stats_and_substats_list.append(substat)
 
             stats_and_substats_dict[
