@@ -96,6 +96,9 @@ class Extractor:
         characters_data_list = list()
         [characters_data_list.append(self._extract_character_data(url))
          for url in character_urls_list]
+        characters_data_list = [characters_data
+                                for characters_data in characters_data_list
+                                if characters_data is not None]
 
         return characters_data_list
 
@@ -158,6 +161,9 @@ class Extractor:
             title for title in match_results_titles_list
             if title.find("Relics") != -1]
         relics_and_ornaments_dict = dict()
+
+        if len(match_results_titles_relics_and_ornaments_list) == 0:
+            return None
 
         for all_relics_and_ornaments in (
                 match_results_titles_relics_and_ornaments_list):
@@ -251,6 +257,7 @@ class Extractor:
             key for key in relics_and_ornaments_dict.keys()]
         stats_and_substats_dict_keys = [
             key for key in stats_and_substats_dict.keys()]
+
         character_data = {
             "name": name,
             "rarity": rarity,

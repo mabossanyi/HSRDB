@@ -9,7 +9,7 @@ from writer import Writer
 # Methods
 def main():
     # Header of the program
-    version = "1.4"
+    version = "1.5 (Phase 1)"
     print("Running the Honkai: Star Rail Database (HSRDB) script using "
           "the version '{}'\n".format(version))
 
