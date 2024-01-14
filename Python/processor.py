@@ -7,7 +7,7 @@ class Processor:
         self._data = data
 
     # Methods
-    def pre_process_characters_data_for_stat(self):
+    def preprocess_characters_data_for_stat(self):
         all_stats_set = set()
 
         for character_data in self._data:
@@ -25,7 +25,7 @@ class Processor:
 
         return all_stats_set
 
-    def pre_process_characters_data_for_slot(self):
+    def preprocess_characters_data_for_slot(self):
         stats_slot_names_list = [
             name.split(";")[0] for name in self._data[0]["stats"]]
         substats_slot_names_list = self._get_slot_name_list(
@@ -56,7 +56,7 @@ class Processor:
 
         return slot_names_list
 
-    def pre_process_characters_data_for_character(self):
+    def preprocess_characters_data_for_character(self):
         characters_list = list()
 
         for character_data in self._data:
@@ -69,7 +69,7 @@ class Processor:
 
         return characters_list
 
-    def pre_process_characters_data_for_character_stat(self):
+    def preprocess_characters_data_for_character_stat(self):
         characters_stats_list = list()
 
         for character_data in self._data:
@@ -103,7 +103,7 @@ class Processor:
         else:
             return stat
 
-    def pre_process_characters_data_for_character_item(self):
+    def preprocess_characters_data_for_character_item(self):
         characters_items_list = list()
 
         for character_data in self._data:
