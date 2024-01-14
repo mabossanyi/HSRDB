@@ -9,7 +9,7 @@ from writer import Writer
 # Methods
 def main():
     # Header of the program
-    version = "1.5 (Phase 1)"
+    version = "1.6 (Phase 1)"
     print("Running the Honkai: Star Rail Database (HSRDB) script using "
           "the version '{}'\n".format(version))
 
@@ -18,7 +18,7 @@ def main():
     main_page_url = "https://genshin.gg/star-rail/"
     main_page_extractor = get_page_extractor_from_url(main_page_url)
 
-    # Get the classes "Storage" and "Writer"
+    # Get the class "Storage"
     storage = Storage()
 
     # Extract and store the types
@@ -44,10 +44,10 @@ def main():
     extract_and_store_items(
         relics_page_extractor, ornaments_page_extractor, storage)
 
-    # Extract and store the items sets (i.e. relic sets description and
+    # Extract and store the item sets (i.e. the relic sets description and
     # ornament sets description)
     print("Extracting and storing the items sets...")
-    extract_and_store_items_sets(
+    extract_and_store_item_sets(
         relics_page_extractor, ornaments_page_extractor, storage)
 
     # Extract and store the characters data for each character on the main page
@@ -58,11 +58,11 @@ def main():
     # Get the class "Processor" from the characters raw data
     data_processor = processor.Processor(storage.get_characters_data())
 
-    # Preprocess and store stats from the characters data
+    # Preprocess and store the stats from the characters data
     print("Preprocessing and storing the stats...")
     preprocess_and_store_stats(data_processor, storage)
 
-    # Preprocess and store slots from the characters data
+    # Preprocess and store the slots from the characters data
     print("Preprocessing and storing the slots...")
     preprocess_and_store_slots(data_processor, storage)
 
@@ -70,13 +70,13 @@ def main():
     print("Preprocessing and storing the characters...")
     preprocess_and_store_characters(data_processor, storage)
 
-    # Preprocess and store the characters stats from the characters data
+    # Preprocess and store the character stats from the characters data
     print("Preprocessing and storing the characters-stats...")
-    preprocess_and_store_characters_stats(data_processor, storage)
+    preprocess_and_store_character_stats(data_processor, storage)
 
-    # Preprocess and store the characters items from the characters data
+    # Preprocess and store the character items from the characters data
     print("Preprocessing and storing the characters-items...")
-    preprocess_and_store_characters_items(data_processor, storage)
+    preprocess_and_store_character_items(data_processor, storage)
 
     # Write the "INSERT.sql" file
     file_name = "INSERT.sql"
@@ -116,13 +116,13 @@ def extract_and_store_items(relics_extractor, ornaments_extractor, storage):
     print(" Completed.\n\t --> Total of {} item(s)\n".format(len(item_names)))
 
 
-def extract_and_store_items_sets(
+def extract_and_store_item_sets(
         relics_extractor, ornaments_extractor, storage):
     relic_details = relics_extractor.extract_relics_or_ornaments_description()
     ornament_details = (
         ornaments_extractor.extract_relics_or_ornaments_description())
     item_details = relic_details + ornament_details
-    storage.store_items_sets(item_details)
+    storage.store_item_sets(item_details)
     print(" Completed.\n\t --> Total of {} items set(s)\n".format(
         len(item_details)))
 
@@ -135,38 +135,38 @@ def extract_and_store_characters_data(url, page_extractor, storage):
 
 
 def preprocess_and_store_stats(data_processor, storage):
-    stats = data_processor.pre_process_characters_data_for_stat()
+    stats = data_processor.preprocess_characters_data_for_stat()
     storage.store_stats(stats)
     _print_verbosity_from_data(stats)
     print(" Completed.\n\t --> Total of {} stat(s)\n".format(len(stats)))
 
 
 def preprocess_and_store_slots(data_processor, storage):
-    slots = data_processor.pre_process_characters_data_for_slot()
+    slots = data_processor.preprocess_characters_data_for_slot()
     storage.store_slots(slots)
     _print_verbosity_from_data(slots)
     print(" Completed.\n\t --> Total of {} slot(s)\n".format(len(slots)))
 
 
 def preprocess_and_store_characters(data_processor, storage):
-    characters = data_processor.pre_process_characters_data_for_character()
+    characters = data_processor.preprocess_characters_data_for_character()
     storage.store_characters(characters)
     print(" Completed.\n\t --> Total of {} character(s)\n".format(
         len(characters)))
 
 
-def preprocess_and_store_characters_stats(data_processor, storage):
+def preprocess_and_store_character_stats(data_processor, storage):
     characters_stats = (
-        data_processor.pre_process_characters_data_for_character_stat())
-    storage.store_characters_stats(characters_stats)
+        data_processor.preprocess_characters_data_for_character_stat())
+    storage.store_character_stats(characters_stats)
     print(" Completed.\n\t --> Total of {} characters-stat(s)\n".format(
         len(characters_stats)))
 
 
-def preprocess_and_store_characters_items(data_processor, storage):
+def preprocess_and_store_character_items(data_processor, storage):
     characters_items = (
-        data_processor.pre_process_characters_data_for_character_item())
-    storage.store_characters_items(characters_items)
+        data_processor.preprocess_characters_data_for_character_item())
+    storage.store_character_items(characters_items)
     print(" Completed.\n\t --> Total of {} characters-item(s)\n".format(
         len(characters_items)))
 
